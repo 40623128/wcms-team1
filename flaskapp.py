@@ -75,6 +75,7 @@ app.secret_key = 'A0Zr9@8j/3yX R~XHH!jmN]LWX/,?R@T'
 
 # 子目錄中註冊藍圖位置
 #app.register_blueprint(users.g1.user1.g1app)
+
 @app.route('/')
 def index():
     head, level, page = parse_content()
@@ -319,7 +320,7 @@ def editorhead():
 tinymce.init({
   selector: "textarea",
   height: 500,
-  element_format : "xhtml",
+  element_format : "html",
   language : "en",
   plugins: [
     'advlist autolink lists link image charmap print preview hr anchor pagebreak',
@@ -594,6 +595,7 @@ def file_lister(directory, type=None, page=1, item_per_page=10):
         return outstring+"<br /><br /><a href='fileuploadform'>file upload</a>"
     else:
         return outstring+"<br /><br /><a href='imageuploadform'>image upload</a>"
+
 # 配合 Tinymce4 讓使用者透過 html editor 引用所上傳的 files 與 images
 @app.route('/file_selector', methods=['GET'])
 def file_selector():
@@ -632,6 +634,7 @@ def downloadselect_access_list(files, starti, endi):
         files[index]+'''",0); return false;'>'''+ \
         files[index]+'''</a> ('''+str(sizeof_fmt(fileSize))+''')<br />'''
     return outstring
+
 def downloadlist_access_list(files, starti, endi):
     # different extension files, associated links were provided
     # popup window to view images, video or STL files, other files can be downloaded directly
@@ -658,6 +661,7 @@ def downloadlist_access_list(files, starti, endi):
         else:
             outstring += "<input type='checkbox' name='filename' value='"+files[index]+"'><a href='/download/?type=files&filename="+files[index]+"'>"+files[index]+"</a> ("+str(fileSize)+")<br />"
     return outstring
+
 #@app.route('/download_list', defaults={'edit':1})
 #@app.route('/download_list/<path:edit>')
 @app.route('/download_list', methods=['GET'])
@@ -764,6 +768,7 @@ def download_list():
 
     return set_css()+"<div class='container'><nav>"+ \
         directory+"</nav><section><h1>Download List</h1>"+outstring+"<br/><br /></body></html>"
+
 # 與 file_selector 搭配的取影像檔程式
 def imageselect_access_list(files, starti, endi):
     outstring = '''<head>
@@ -796,6 +801,7 @@ a.xhfbfile:hover{
         <img src="/download/?type=images&filename='''+ \
         files[index]+'''" width="150px"/></span></a> ('''+str(sizeof_fmt(fileSize))+''')<br />'''
     return outstring
+
 def imagelist_access_list(files, starti, endi):
     # different extension files, associated links were provided
     # popup window to view images, video or STL files, other files can be downloaded directly
@@ -812,6 +818,7 @@ def imagelist_access_list(files, starti, endi):
             files[index]+'\',\'images\', \'catalogmode\',\'scrollbars\')">'+files[index]+'</a> ('+str(fileSize)+')<br />'
 
     return outstring
+
 def loadlist_access_list(files, starti, endi, filedir):
     # different extension files, associated links were provided
     # popup window to view images, video or STL files, other files can be downloaded directly
@@ -936,6 +943,9 @@ def syntaxhighlight():
 <script type="text/javascript" src="/static/syntaxhighlighter/shBrushCSharp.js"></script>
 <link type="text/css" rel="stylesheet" href="/static/syntaxhighlighter/css/shCoreDefault.css"/>
 <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+<!-- add Lua -->
+<script src="/static/fengari-web.js"></script>
 '''
 def set_css():
     outstring = '''<!doctype html>
@@ -1243,6 +1253,7 @@ def image_list(edit, item_per_page=5, page=1, keyword=None):
 
     return set_css()+"<div class='container'><nav>"+ \
         directory+"</nav><section><h1>Image List</h1>"+outstring+"<br/><br /></body></html>"
+
 @app.route('/load_list')
 def load_list(item_per_page=5, page=1, filedir=None, keyword=None):
     files = os.listdir(data_dir+filedir+"_programs/")
@@ -1347,6 +1358,7 @@ function keywordSearch(){
     outstring += "<br /><br /></form>"
 
     return outstring
+
 @app.route('/image_delete_file', methods=['POST'])
 def image_delete_file():
     if not isAdmin():
@@ -1423,6 +1435,7 @@ def doDelete():
 
     return set_css()+"<div class='container'><nav>"+ \
         directory+"</nav><section><h1>Download List</h1>"+outstring+"<br/><br /></body></html>"
+
 @app.route('/image_doDelete', methods=['POST'])
 def image_doDelete():
     if not isAdmin():
@@ -1451,6 +1464,7 @@ def image_doDelete():
 
     return set_css()+"<div class='container'><nav>"+ \
         directory+"</nav><section><h1>Image List</h1>"+outstring+"<br/><br /></body></html>"
+
 @app.route('/search_form', defaults={'edit': 1})
 @app.route('/search_form/<path:edit>')
 def search_form(edit):
@@ -1486,6 +1500,7 @@ def doSearch():
 @app.route('/listdir')
 def listdir():
     return download_dir +","+data_dir
+
 @app.route('/sitemap', defaults={'edit':1})
 @app.route('/sitemap/<path:edit>')
 def sitemap(edit):

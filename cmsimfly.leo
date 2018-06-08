@@ -837,6 +837,9 @@ window.location= 'https://' + location.host + location.pathname + location.searc
 &lt;script type="text/javascript" src="/static/syntaxhighlighter/shBrushCSharp.js"&gt;&lt;/script&gt;
 &lt;link type="text/css" rel="stylesheet" href="/static/syntaxhighlighter/css/shCoreDefault.css"/&gt;
 &lt;script type="text/javascript"&gt;SyntaxHighlighter.all();&lt;/script&gt;
+
+&lt;!-- add Lua --&gt;
+&lt;script src="/static/fengari-web.js"&gt;&lt;/script&gt;
 '''
 </t>
 <t tx="amd.20160714232140.1"># 與 file_selector 搭配的取檔程式
